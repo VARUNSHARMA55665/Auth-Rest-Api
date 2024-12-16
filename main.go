@@ -3,6 +3,7 @@ package main
 import (
 	controllers "auth-rest-api/controllers/api"
 	"auth-rest-api/db"
+	_ "auth-rest-api/docs"
 	"auth-rest-api/models"
 	"auth-rest-api/routers"
 	services "auth-rest-api/services/api"

@@ -2,6 +2,10 @@
 package routers
 
 import (
+	"auth-rest-api/middlewares"
+
+	apiController "auth-rest-api/controllers/api"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -18,18 +22,12 @@ func SetupRouter() *gin.Engine {
 	r.Static("/templates", "templates")
 	r.LoadHTMLGlob("templates/*")
 
-	// r.Use(auth.Middleware())
-
-	// v1 := r.Group("/api/v1")
-	// {
-	// 	v1.GET("/delivery", controllers.DeliveryHandler)
-	// }
-
-	// verifyOtpGroup := r.Group("/api/dao/v1/kyc/verifyOtp")
-	// verifyOtpGroup.Use(middlewares.NoAuthMiddleware())
-	// {
-	// 	verifyOtpGroup.POST("", apiControllerV1.VerifyOtp)
-	// }
+	userGroup := r.Group("/api/auth-rest-api/user")
+	userGroup.Use(middlewares.NoAuthMiddleware())
+	{
+		userGroup.POST("/signUp", apiController.SignUp)
+		userGroup.POST("/signIn", apiController.SignIn)
+	}
 
 	return r
 }

@@ -1,0 +1,96 @@
+definitions:
+  apihelpers.APIRes:
+    properties:
+      data: {}
+      errorcode:
+        type: string
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+  models.LogInReq:
+    properties:
+      emailId:
+        example: abc@gmail.com
+        type: string
+      password:
+        type: string
+    type: object
+  models.LogInRes:
+    properties:
+      authorization:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/auth-rest-api/user/signIn:
+    post:
+      consumes:
+      - application/json
+      description: enter email and password for signin
+      parameters:
+      - description: signin
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.LogInReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/apihelpers.APIRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.LogInRes'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apihelpers.APIRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apihelpers.APIRes'
+      tags:
+      - users V1
+  /api/auth-rest-api/user/signUp:
+    post:
+      consumes:
+      - application/json
+      description: enter email and password for signup
+      parameters:
+      - description: Signup
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.LogInReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/apihelpers.APIRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.LogInRes'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apihelpers.APIRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apihelpers.APIRes'
+      tags:
+      - users V1
+swagger: "2.0"

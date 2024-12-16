@@ -18,12 +18,14 @@ func InitUserProvider(provider models.UserProvider) {
 }
 
 // Signup
-// @Tags users V1
 // @Description enter email and password for signup
+// @Tags users V1
+// @Accept json
+// @Produce json
 // @Param request body models.LogInReq true "Signup"
-// @Success 200 {object} u.APIRes{data=models.LogInRes}
-// @Failure 400 {object} u.APIRes
-// @Failure 403 {object} u.APIRes
+// @Success 200 {object} apihelpers.APIRes{data=models.LogInRes}
+// @Failure 400 {object} apihelpers.APIRes
+// @Failure 500 {object} apihelpers.APIRes
 // @Router /api/auth-rest-api/user/signUp [post]
 func SignUp(c *gin.Context) {
 	var userDetails models.LogInReq
@@ -45,12 +47,14 @@ func SignUp(c *gin.Context) {
 }
 
 // SignIn
-// @Tags users V1
 // @Description enter email and password for signin
+// @Tags users V1
+// @Accept json
+// @Produce json
 // @Param request body models.LogInReq true "signin"
-// @Success 200 {object} u.APIRes{data=models.LogInRes}
-// @Failure 400 {object} u.APIRes
-// @Failure 403 {object} u.APIRes
+// @Success 200 {object} apihelpers.APIRes{data=models.LogInRes}
+// @Failure 400 {object} apihelpers.APIRes
+// @Failure 500 {object} apihelpers.APIRes
 // @Router /api/auth-rest-api/user/signIn [post]
 func SignIn(c *gin.Context) {
 	var userDetails models.LogInReq
