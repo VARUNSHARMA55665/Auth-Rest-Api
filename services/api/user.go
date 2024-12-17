@@ -4,6 +4,7 @@ import (
 	apihelpers "auth-rest-api/apiHelpers"
 	"auth-rest-api/constants"
 	"auth-rest-api/db"
+	"auth-rest-api/helpers"
 	"auth-rest-api/models"
 	"log"
 	"net/http"
@@ -70,8 +71,22 @@ func (obj UserObj) UserSignUp(req models.LogInReq) (int, apihelpers.APIRes) {
 		return apihelpers.SendInternalServerError()
 	}
 
+	// generate jwt token
+	jwtToken, err := helpers.GenerateJWT(req.EmailId)
+	if err != nil {
+		log.Println("UserSignUp GenerateJWT failed, err = ", err, " emailId:", req.EmailId)
+		return apihelpers.SendInternalServerError()
+	}
+
+	redisAuthKey := "auth|" + req.EmailId
+	err = helpers.SetRedis(redisAuthKey, jwtToken, 24*60) // set token for one day
+	if err != nil {
+		log.Println(" VerifyOtp SetRedis failed, err = ", err, " emailId:", req.EmailId)
+		return apihelpers.SendInternalServerError()
+	}
+
 	var signupRes models.LogInRes
-	signupRes.Authorization = "Bearer <token-placeholder>"
+	signupRes.Authorization = "Bearer " + redisAuthKey
 
 	// Step 5: Success response
 	log.Println("UserSignUp: Successfully signed up user with emailId:", req.EmailId)
