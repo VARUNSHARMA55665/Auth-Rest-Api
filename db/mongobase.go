@@ -1,10 +1,10 @@
 package db
 
 import (
-	"auth-rest-api/constants"
+	"auth-rest-api/resources"
 	"context"
-	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -17,13 +17,13 @@ func InitMongoClient() error {
 
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
-	mongoBase := constants.MongoBase
-	mongoPass := constants.MongoPass
-	mongoUri := constants.MongoUri
+	env := os.Getenv("GO_ENV")
+
+	mongoBase := resources.GetConfig().GetString("config." + env + ".mongoBase")
+	mongoPass := resources.GetConfig().GetString("config." + env + ".mongoPass")
+	mongoUri := resources.GetConfig().GetString("config." + env + ".mongoUri")
 
 	mongoBaseURI := mongoBase + ":" + mongoPass + "@" + mongoUri
-
-	fmt.Println(mongoBaseURI)
 
 	var err error
 	client, err = mongo.Connect(ctx, options.Client().ApplyURI(mongoBaseURI))
@@ -36,7 +36,8 @@ func InitMongoClient() error {
 }
 
 func GetMongoCollection(collectionName string) *mongo.Collection {
-	dbName := constants.DbName
+	env := os.Getenv("GO_ENV")
+	dbName := resources.GetConfig().GetString("config." + env + ".dbName")
 	collection := client.Database(dbName).Collection(collectionName)
 	return collection
 }

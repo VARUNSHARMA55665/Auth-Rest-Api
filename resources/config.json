@@ -1,0 +1,12 @@
+{
+    "config": {
+        "dev":{
+            "redisUrl": "127.0.0.1:6379",
+            "mongoBase": "mongodb+srv://varun",
+            "mongoPass": "vmv2021",
+            "mongoUri": "cluster0.uhwsn.mongodb.net/team_crew_db?retryWrites=true&w=majority",
+            "dbName": "auth-user-store",
+            "SECRET_KEY": "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY0OTMzMzc4MiwiaWF0IjoxNjQ5MzMzNzgyfQ.XqmyGaUYYAToWylEWfD26EN52rBMivW7Zkt3O2u1cSo"
+        }
+    }
+}

@@ -4,10 +4,12 @@ import (
 	"encoding/base64"
 	"errors"
 	"log"
+	"os"
 	"strings"
 	"time"
 
 	"auth-rest-api/constants"
+	"auth-rest-api/resources"
 
 	"github.com/golang-jwt/jwt"
 )
@@ -34,8 +36,11 @@ type Auth struct {
 
 func ValidateToken(token string) (string, error) { //TODO: use claims.OmneManagerID for gm1, gm2, gm3. gm4
 
+	env := os.Getenv("GO_ENV")
+	secretKey := resources.GetConfig().GetString("config." + env + ".SECRET_KEY")
+
 	tokens, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(constants.SECRET_KEY), nil
+		return []byte(secretKey), nil
 	})
 
 	if err != nil {
@@ -68,7 +73,9 @@ func GenerateJWT(userId string) (string, error) {
 	atClaims["subject"] = userId
 	atClaims["exp"] = exp.Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS512, atClaims)
-	tokenString, err := token.SignedString([]byte(constants.SECRET_KEY))
+	env := os.Getenv("GO_ENV")
+	secretKey := resources.GetConfig().GetString("config." + env + ".SECRET_KEY")
+	tokenString, err := token.SignedString([]byte(secretKey))
 	if err != nil {
 		log.Println("GenerateJWT Error in JWT token generation: ", err)
 		return "", err
