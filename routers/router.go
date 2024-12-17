@@ -29,5 +29,12 @@ func SetupRouter() *gin.Engine {
 		userGroup.POST("/signIn", apiController.SignIn)
 	}
 
+	userGroupAuth := r.Group("/api/auth-rest-api/user/auth")
+	userGroupAuth.Use(middlewares.AuthMiddleware())
+	{
+		userGroupAuth.POST("/revokeToken", apiController.RevokeToken)
+		userGroupAuth.POST("/refreshToken", apiController.RefreshToken)
+	}
+
 	return r
 }

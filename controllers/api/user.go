@@ -75,3 +75,55 @@ func SignIn(c *gin.Context) {
 	apihelpers.CustomResponse(c, code, resp)
 
 }
+
+// RevokeToken
+// @Description Revoke Token
+// @Tags users V1
+// @Accept json
+// @Produce json
+// @Param P-DeviceType header string true "P-DeviceType Header"
+// @Param Authorization header string true "Authorization Header"
+// @Success 200 {object} apihelpers.APIRes
+// @Failure 400 {object} apihelpers.APIRes
+// @Failure 500 {object} apihelpers.APIRes
+// @Router /api/auth-rest-api/user/auth/revokeToken [post]
+func RevokeToken(c *gin.Context) {
+	var requestH models.ReqHeader
+	if err := c.ShouldBindHeader(&requestH); err != nil {
+		log.Println("RevokeToken error in ShouldBindHeader err: ", err)
+		apihelpers.SendInternalServerError()
+		return
+	}
+
+	log.Println("In RevokeToken (controller)")
+
+	code, resp := theUserProvider.RevokeToken(requestH.Authorization)
+	apihelpers.CustomResponse(c, code, resp)
+
+}
+
+// RefreshToken
+// @Description Refresh Token
+// @Tags users V1
+// @Accept json
+// @Produce json
+// @Param P-DeviceType header string true "P-DeviceType Header"
+// @Param Authorization header string true "Authorization Header"
+// @Success 200 {object} apihelpers.APIRes{data=models.AuthToken}
+// @Failure 400 {object} apihelpers.APIRes
+// @Failure 500 {object} apihelpers.APIRes
+// @Router /api/auth-rest-api/user/auth/refreshToken [post]
+func RefreshToken(c *gin.Context) {
+	var requestH models.ReqHeader
+	if err := c.ShouldBindHeader(&requestH); err != nil {
+		log.Println("RevokeToken error in ShouldBindHeader err: ", err)
+		apihelpers.SendInternalServerError()
+		return
+	}
+
+	log.Println("In RefreshToken (controller)")
+
+	code, resp := theUserProvider.RefreshToken(requestH.Authorization)
+	apihelpers.CustomResponse(c, code, resp)
+
+}

@@ -7,3 +7,7 @@ const (
 const (
 	MongoNoDocError = "mongo: no documents in result"
 )
+
+const (
+	TokenTTL = 24 * 60
+)

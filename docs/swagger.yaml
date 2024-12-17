@@ -9,6 +9,11 @@ definitions:
       status:
         type: boolean
     type: object
+  models.AuthToken:
+    properties:
+      token:
+        type: string
+    type: object
   models.LogInReq:
     properties:
       emailId:
@@ -25,6 +30,77 @@ definitions:
 info:
   contact: {}
 paths:
+  /api/auth-rest-api/user/auth/refreshToken:
+    post:
+      consumes:
+      - application/json
+      description: Refresh Token
+      parameters:
+      - description: P-DeviceType Header
+        in: header
+        name: P-DeviceType
+        required: true
+        type: string
+      - description: Authorization Header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/apihelpers.APIRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/models.AuthToken'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apihelpers.APIRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apihelpers.APIRes'
+      tags:
+      - users V1
+  /api/auth-rest-api/user/auth/revokeToken:
+    post:
+      consumes:
+      - application/json
+      description: Revoke Token
+      parameters:
+      - description: P-DeviceType Header
+        in: header
+        name: P-DeviceType
+        required: true
+        type: string
+      - description: Authorization Header
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/apihelpers.APIRes'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/apihelpers.APIRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/apihelpers.APIRes'
+      tags:
+      - users V1
   /api/auth-rest-api/user/signIn:
     post:
       consumes:
