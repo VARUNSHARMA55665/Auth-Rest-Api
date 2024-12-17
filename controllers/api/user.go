@@ -37,6 +37,7 @@ func SignUp(c *gin.Context) {
 		return
 	}
 
+	// Normalize the email (to lower case)
 	userDetails.EmailId = strings.ToLower(userDetails.EmailId)
 
 	log.Println("Signup (controller), reqParams email:", userDetails.EmailId)
