@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"golang.org/x/crypto/bcrypt"
@@ -102,7 +101,6 @@ func (obj UserObj) UserSignIn(req models.LogInReq) (int, apihelpers.APIRes) {
 	// Initialize the API response
 	apiRes.Data = nil
 	apiRes.Status = false
-	apiRes.Message = "Sign-in Failed"
 
 	// Fetch user from the database
 	var existingUser models.MongoSignup
@@ -233,13 +231,15 @@ func (obj UserObj) RefreshToken(authHeader string) (int, apihelpers.APIRes) {
 		return apihelpers.SendInternalServerError()
 	}
 
+	var refreshRes models.LogInRes
+	refreshRes.Authorization = "Bearer " + newToken
+
 	log.Println("RefreshToken: New token issued for email:", email)
 
 	// Prepare the Response
+	apiRes.Data = refreshRes
 	apiRes.Status = true
 	apiRes.Message = "Token refreshed successfully"
-	apiRes.Data = gin.H{"access_token": "Bearer " + newToken}
 
 	return http.StatusOK, apiRes
-
 }

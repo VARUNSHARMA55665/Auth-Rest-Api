@@ -56,7 +56,7 @@ const docTemplate = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "$ref": "#/definitions/models.AuthToken"
+                                            "$ref": "#/definitions/models.LogInRes"
                                         }
                                     }
                                 }
@@ -256,14 +256,6 @@ const docTemplate = `{
                 },
                 "status": {
                     "type": "boolean"
-                }
-            }
-        },
-        "models.AuthToken": {
-            "type": "object",
-            "properties": {
-                "token": {
-                    "type": "string"
                 }
             }
         },

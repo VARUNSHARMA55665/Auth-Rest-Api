@@ -9,11 +9,6 @@ definitions:
       status:
         type: boolean
     type: object
-  models.AuthToken:
-    properties:
-      token:
-        type: string
-    type: object
   models.LogInReq:
     properties:
       emailId:
@@ -56,7 +51,7 @@ paths:
             - $ref: '#/definitions/apihelpers.APIRes'
             - properties:
                 data:
-                  $ref: '#/definitions/models.AuthToken'
+                  $ref: '#/definitions/models.LogInRes'
               type: object
         "400":
           description: Bad Request

@@ -60,6 +60,7 @@ func InitRedis() error {
 	env := os.Getenv("GO_ENV")
 
 	redisUrl := resources.GetConfig().GetString("config." + env + ".redisUrl")
+
 	var err error
 	client, err = NewRedisClient(redisUrl)
 	if err != nil {

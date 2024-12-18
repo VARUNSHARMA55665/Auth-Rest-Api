@@ -8,7 +8,3 @@ type LogInReq struct {
 type LogInRes struct {
 	Authorization string `header:"Authorization"`
 }
-
-type AuthToken struct {
-	Token string `header:"token"`
-}

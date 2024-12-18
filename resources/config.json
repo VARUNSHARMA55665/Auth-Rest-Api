@@ -1,7 +1,7 @@
 {
     "config": {
         "dev":{
-            "redisUrl": "127.0.0.1:6379",
+            "redisUrl": "redis:6379",
             "mongoBase": "mongodb+srv://varun",
             "mongoPass": "vmv2021",
             "mongoUri": "cluster0.uhwsn.mongodb.net/team_crew_db?retryWrites=true&w=majority",

@@ -109,7 +109,7 @@ func RevokeToken(c *gin.Context) {
 // @Produce json
 // @Param P-DeviceType header string true "P-DeviceType Header"
 // @Param Authorization header string true "Authorization Header"
-// @Success 200 {object} apihelpers.APIRes{data=models.AuthToken}
+// @Success 200 {object} apihelpers.APIRes{data=models.LogInRes}
 // @Failure 400 {object} apihelpers.APIRes
 // @Failure 500 {object} apihelpers.APIRes
 // @Router /api/auth-rest-api/user/auth/refreshToken [post]
